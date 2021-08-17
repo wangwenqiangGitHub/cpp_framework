@@ -3,6 +3,69 @@
 #include <iostream>
 using namespace bfl::base;
 
+class Person{
+public:
+	Person(){}
+	std::string m_name;
+	int m_age = 10;
+	bool m_sex = 0;
+	
+	std::string toString() const{
+		std::stringstream ss;
+		ss << "[Person name=" << m_name
+			<< " age=" << m_age
+			<< " sex=" << m_sex
+			<< "]";
+		return ss.str();
+	}
+
+	bool operator==(const Person& oth) const
+	{
+		return m_name == oth.m_name
+			&& m_age == oth.m_age
+			&& m_sex == oth.m_sex;
+	}
+	
+
+};
+
+namespace bfl{ namespace base{
+template<>
+class LexicalCast<std::string, Person> {
+public:
+	Person operator()(const std::string& v) 
+	{
+		YAML::Node node = YAML::Load(v);
+		Person p;
+		p.m_name = node["name"].as<std::string>();
+		p.m_age = node["age"].as<int>();
+		p.m_sex = node["sex"].as<bool>();
+		return p;
+	}
+};
+
+template<>
+class LexicalCast<Person, std::string> {
+public:
+	std::string operator()(const Person& p) 
+	{
+		YAML::Node node;
+		node["name"] = p.m_name;
+		node["age"] = p.m_age;
+		node["sex"] = p.m_sex;
+		std::stringstream ss;
+		ss << node;
+		return ss.str();
+	}
+};
+}
+}
+
+ConfigVar<Person>::ptr g_person = Config::Lookup("class.person", Person(), "system person");
+void test_class() 
+{
+	printf("%d\n", g_person->getValue().m_age);
+}
 void print_yaml(const YAML::Node& node)
 {
 	// 是纯量
@@ -41,5 +104,6 @@ int main(int argc,char** argv)
 {
 	std::printf("test config\n");
 	test_config();
+	test_class();
 	return 0;
 }
