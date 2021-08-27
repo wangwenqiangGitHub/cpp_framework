@@ -17,6 +17,7 @@ message(${PROJECT_SOURCE_DIR})
 aux_source_directory(src SRC)
 
 add_executable(${PROJECT_NAME} ${SRC} test/test_config.cpp)
+add_executable(test_terminal test/test_terminal.cpp)
 
 target_link_libraries(${PROJECT_NAME} yaml-cpp)
 
