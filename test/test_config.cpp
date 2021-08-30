@@ -93,11 +93,11 @@ bfl::base::ConfigVar<float>::ptr g_float_value_config =
 	bfl::base::Config::Lookup("system.value", (float)10.2f, "system value");
 void test_config()
 {
-	YAML::Node root = YAML::LoadFile("/home/kingwq/test/cppFunction/syllar/cfg/test_config.yml");
+	YAML::Node root = YAML::LoadFile("/home/kingwq/test/cppFunction/cpp_framework/cfg/test_config.yml");
 	bfl::base::Config::LoadFromYaml(root);
 	std::cout << "test root"<<  root["name"].IsDefined() << std::endl;
- std::printf("%d\n", g_int_value_config->getValue());
- std::printf("%s\n",g_float_value_config->toString().c_str());
+	std::printf("test1 %d\n", g_int_value_config->getValue());
+	std::printf("test2 %s\n", g_float_value_config->toString().c_str());
 }
 
 int main(int argc,char** argv)
