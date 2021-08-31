@@ -2,6 +2,8 @@
 #define __BFL_UTIL_H__
 #include <cxxabi.h>
 #include <pthread.h>
+#include <vector>
+#include <string>
 
 #include "boost/lexical_cast.hpp"
 namespace bfl {namespace base{
