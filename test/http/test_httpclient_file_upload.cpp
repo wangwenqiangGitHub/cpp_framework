@@ -28,6 +28,11 @@ int main(int argc, char const *argv[])
     };
 
     auto res = cli.Post("/post", items);
+	// 检查空指针
+	if(!res)
+	{
+		return 1;
+	}
 	// http返回的消息
     cout << res->body;
 

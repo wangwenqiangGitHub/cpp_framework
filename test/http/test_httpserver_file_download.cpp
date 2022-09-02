@@ -58,5 +58,5 @@ int main(void)
                  res.set_content(result.dump(), "text/plain");
              });
 
-    svr.listen("localhost", 5321);
+    svr.listen("127.0.0.1", 5321);
 }
